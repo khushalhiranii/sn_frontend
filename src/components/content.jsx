@@ -3,25 +3,28 @@ import React, { useState } from "react";
 
 export const Content = ({ className = "" }) => {
 
-  const [username, setUsername] = useState('');
+  const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const credentials = { username, password };
+        const credentials = { email, password };
 
         try {
-            const response = await fetch('https://api.example.com/login', {
+          const url=`${import.meta.env.VITE_API_URL}/api/v1/admin/login`;
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(credentials)
             });
+            console.log(credentials)
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+            
 
             const data = await response.json();
             console.log('Success:', data);
@@ -46,8 +49,8 @@ export const Content = ({ className = "" }) => {
         <input
           className="[outline:none] bg-[transparent] self-stretch h-[3.063rem] box-border min-w-[15.625rem] border-[1px] border-solid border-gray"
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={email}
+          onChange={(e) => setemail(e.target.value)}
         />
         <div className="relative text-[1.25rem] font-inter text-black text-left inline-block min-w-[5.813rem] mq450:text-[1rem]">
           Password
@@ -66,6 +69,7 @@ export const Content = ({ className = "" }) => {
           </a>
         </button>
       </div>
+      
     </form>
   );
 };

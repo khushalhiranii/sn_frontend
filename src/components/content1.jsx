@@ -15,7 +15,7 @@ export const Content1 = ({ className = "" }) => {
               className="h-[9.375rem] w-[9.375rem] relative object-cover"
               loading="lazy"
               alt=""
-              src="/src/components/sn.png"
+              src="/sn.png"
             />
           </div>
           <div className="relative font-medium mq450:text-[1.375rem] mq925:text-[1.813rem]">
