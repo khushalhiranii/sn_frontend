@@ -20,18 +20,32 @@ export const Content = ({ className = "" }) => {
                 body: JSON.stringify(credentials)
             });
             console.log(credentials)
-
+            // console.log(response.headers.getSetCookie())
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+
+            
+
             
 
             const data = await response.json();
             console.log('Success:', data);
+            const url2=`${import.meta.env.VITE_API_URL}/api/v1/data`;
+            const response2 = await fetch(url2, {
+              method: 'GET',
+              credentials: 'include'
+              
+          }).then(response => response.json())
+          .then(data => {
+            console.log(data)
+          });
+
         } catch (error) {
             console.error('Error:', error);
         }
     };
+    
 
   return (
     <form onSubmit={handleSubmit}
