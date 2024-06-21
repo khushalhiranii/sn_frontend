@@ -7,44 +7,54 @@ export const Content = ({ className = "" }) => {
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        const credentials = { email, password };
-
-        try {
-          const url=`${import.meta.env.VITE_API_URL}/api/v1/admin/login`;
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(credentials)
-            });
-            console.log(credentials)
-            // console.log(response.headers.getSetCookie())
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            
-
-            
-
-            const data = await response.json();
-            console.log('Success:', data);
-            const url2=`${import.meta.env.VITE_API_URL}/api/v1/data`;
-            const response2 = await fetch(url2, {
-              method: 'GET',
-              credentials: 'include'
-              
-          }).then(response => response.json())
-          .then(data => {
-            console.log(data)
-          });
-
-        } catch (error) {
-            console.error('Error:', error);
+      event.preventDefault();
+      const credentials = { email, password };
+    
+      try {
+        const url = `${import.meta.env.VITE_API_URL}/api/v1/admin/login`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(credentials),
+          credentials: 'include' // Include credentials to allow cookies
+        });
+    
+        console.log(credentials);
+    
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+    
+        const data = await response.json();
+        console.log('Login Success:', data);
+    
+        // Make the subsequent GET request if login is successful
+        
+    
+      } catch (error) {
+        console.error('Error:', error);
+      }
+
+      // try {
+      //   const url2 = `${import.meta.env.VITE_API_URL}/api/v1/data`;
+      //   const response2 = await fetch(url2, {
+      //     method: 'GET',
+      //     credentials: 'include', // Include credentials to send cookies
+      //   });
+    
+      //   if (!response2.ok) {
+      //     throw new Error('Network response was not ok');
+      //   }
+    
+      //   const data2 = await response2.json();
+      //   console.log('Data Fetch Success:', data2);
+      // } catch (error) {
+      //   console.error('Error:', error); 
+      // }
     };
+    
     
 
   return (
