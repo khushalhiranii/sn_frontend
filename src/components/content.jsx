@@ -1,10 +1,14 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import axios from 'axios';
+import { useToken } from "../context/TokenContext";
 
 export const Content = ({ className = "" }) => {
 
   const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
+    
+    const { setToken } = useToken();
 
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -12,14 +16,8 @@ export const Content = ({ className = "" }) => {
     
       try {
         const url = `${import.meta.env.VITE_API_URL}/api/v1/admin/login`;
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(credentials),
-          credentials: 'include' // Include credentials to allow cookies
-        });
+        const response = await axios.post(url, credentials)
+        setToken(response.data.token);
     
         console.log(credentials);
     
